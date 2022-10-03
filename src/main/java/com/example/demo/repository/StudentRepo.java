@@ -8,7 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepo extends JpaRepository<Student, Long> {
-    Student findUserById(Long id);
-    Optional<Student> findByUsername(String username);
-    Boolean existsByUsername(String username);
 }
