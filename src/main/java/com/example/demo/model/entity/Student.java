@@ -28,10 +28,9 @@ public class Student {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> courses;
 
-    @ManyToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "student_class", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
-    private List<Class> classes;
+    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "class_id")
+    private Class classes;
 
     @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
@@ -44,7 +43,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Class> classes, List<Payment> payment, AppRole appRole, String image) {
+    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -94,11 +93,11 @@ public class Student {
         this.image = image;
     }
 
-        public List<Class> getClasses() {
+        public Class getClasses() {
         return classes;
     }
 
-    public void setClasses(List<Class> classes) {
+    public void setClasses(Class classes) {
         this.classes = classes;
     }
 
