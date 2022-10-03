@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private LocalDate birth;
     private String address;
     private String firstName;
@@ -28,7 +28,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
+    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -43,11 +43,11 @@ public class Teacher {
         this.appRole = appRole;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
