@@ -20,7 +20,7 @@ public class Class {
     @OneToMany(targetEntity = Payment.class,fetch = FetchType.EAGER)
     private List<Payment> payment;
 
-    @ManyToMany(mappedBy = "classes",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Student.class,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Student> students;
 
