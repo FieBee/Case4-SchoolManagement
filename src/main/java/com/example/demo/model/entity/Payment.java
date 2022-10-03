@@ -14,8 +14,9 @@ public class Payment {
     private Double amount;
     private String status;
 
-    @OneToMany(targetEntity = Class.class)
-    private List<Class>classes;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "class_id")
+    private Class classes;
     public Payment(){
     }
 
@@ -57,11 +58,11 @@ public class Payment {
         this.status = status;
     }
 
-    public List<Class> getClasses() {
+    public Class getClasses() {
         return classes;
     }
 
-    public void setClasses(List<Class> classes) {
+    public void setClasses(Class classes) {
         this.classes = classes;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "class")
@@ -13,9 +14,8 @@ public class Class {
     private LocalDate startDate;
     private LocalDate endDate;
     private Double price;
-    @ManyToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+    @OneToMany(targetEntity = Payment.class,fetch = FetchType.EAGER)
+    private List<Payment> payment;
 
     public Class() {
     }
@@ -28,7 +28,7 @@ public class Class {
         this.price = price;
     }
 
-    public Class(Long id, String name, LocalDate startDate, LocalDate endDate, Double price, Payment payment) {
+    public Class(Long id, String name, LocalDate startDate, LocalDate endDate, Double price, List<Payment> payment) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -77,11 +77,11 @@ public class Class {
         this.price = price;
     }
 
-    public Payment getPayment() {
+    public List<Payment> getPayment() {
         return payment;
     }
 
-    public void setPayment(Payment payment) {
+    public void setPayment(List<Payment> payment) {
         this.payment = payment;
     }
 }
