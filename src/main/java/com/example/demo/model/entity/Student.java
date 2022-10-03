@@ -30,6 +30,7 @@ public class Student {
 
     @ManyToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "student_class", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
     private List<Class> classes;
 
     @OneToMany(targetEntity = Payment.class)
@@ -93,7 +94,7 @@ public class Student {
         this.image = image;
     }
 
-    public List<Class> getClasses() {
+        public List<Class> getClasses() {
         return classes;
     }
 
