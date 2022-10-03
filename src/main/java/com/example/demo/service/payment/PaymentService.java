@@ -1,6 +1,6 @@
 package com.example.demo.service.payment;
 
-import com.example.demo.Payment;
+import com.example.demo.model.entity.Payment;
 import com.example.demo.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Payment;
+import com.example.demo.model.entity.Payment;
 import com.example.demo.service.Iclass.IClassService;
 import com.example.demo.service.payment.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;

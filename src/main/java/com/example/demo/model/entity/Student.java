@@ -4,6 +4,7 @@ import com.example.demo.model.dto.AppRole;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -21,7 +22,8 @@ public class Student {
     private String account;
     private String password;
 
-
+    @OneToMany(targetEntity = Payment.class)
+    private List<Payment> payment;
     @ManyToOne
     private AppRole appRole;
 
@@ -44,6 +46,14 @@ public class Student {
         this.password = password;
         this.appRole = appRole;
         this.image = image;
+    }
+
+    public List<Payment> getPayment() {
+        return payment;
+    }
+
+    public void setPayment(List<Payment> payment) {
+        this.payment = payment;
     }
 
     public Long getId() {

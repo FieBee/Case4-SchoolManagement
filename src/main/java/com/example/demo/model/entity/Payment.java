@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +13,7 @@ public class Payment {
     private LocalDate paymentDate;
     private Double amount;
     private String status;
+
     @OneToMany(targetEntity = Class.class)
     private List<Class>classes;
     public Payment(){
