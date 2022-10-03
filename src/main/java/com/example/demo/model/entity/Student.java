@@ -1,6 +1,8 @@
 package com.example.demo.model.entity;
 
 import com.example.demo.model.dto.AppRole;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,6 +24,14 @@ public class Student {
     private String account;
     private String password;
 
+    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Course> courses;
+
+    @ManyToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Class> classes;
+
     @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
     @ManyToOne
@@ -31,6 +41,41 @@ public class Student {
 
 
     public Student() {
+    }
+
+    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Class> classes, List<Payment> payment, AppRole appRole, String image) {
+        this.id = id;
+        this.birth = birth;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.account = account;
+        this.password = password;
+        this.courses = courses;
+        this.classes = classes;
+        this.payment = payment;
+        this.appRole = appRole;
+        this.image = image;
+    }
+
+    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
+        this.id = id;
+        this.birth = birth;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.account = account;
+        this.password = password;
+        this.courses = courses;
+        this.payment = payment;
+        this.appRole = appRole;
+        this.image = image;
     }
 
     public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
@@ -46,6 +91,22 @@ public class Student {
         this.password = password;
         this.appRole = appRole;
         this.image = image;
+    }
+
+    public List<Class> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<Class> classes) {
+        this.classes = classes;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public List<Payment> getPayment() {

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.entity.Student;
+import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class StudentController {
 
     @Autowired
-    StudentService studentService;
+    IStudentService studentService;
 
 //    @GetMapping
 //    public ModelAndView getStudent(){

@@ -1,9 +1,8 @@
 package com.example.demo.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.example.demo.model.dto.AppRole;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "course")
@@ -14,7 +13,34 @@ public class Course {
     private Integer lessons;
     private String description;
     private String term;
+    private Double price;
 
+    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    public Course(Long id, Integer lessons, String description, String term, Double price, Category category, Student student) {
+        this.id = id;
+        this.lessons = lessons;
+        this.description = description;
+        this.term = term;
+        this.price = price;
+        this.category = category;
+        this.student = student;
+    }
+
+    public Course(Long id, Integer lessons, String description, String term, Double price, Student student) {
+        this.id = id;
+        this.lessons = lessons;
+        this.description = description;
+        this.term = term;
+        this.price = price;
+        this.student = student;
+    }
 
     public Course() {
     }
@@ -24,6 +50,30 @@ public class Course {
         this.lessons = lessons;
         this.description = description;
         this.term = term;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Long getId() {

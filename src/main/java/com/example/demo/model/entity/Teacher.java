@@ -1,10 +1,14 @@
 package com.example.demo.model.entity;
 
 import com.example.demo.model.dto.AppRole;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -23,13 +27,30 @@ public class Teacher {
     private String password;
     private String image;
 
-    @OneToMany(targetEntity = Class.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Class> classes;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private AppRole appRole;
 
     public Teacher() {
+    }
+
+    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, List<Class> classes, AppRole appRole) {
+        this.id = id;
+        this.birth = birth;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.account = account;
+        this.password = password;
+        this.image = image;
+        this.classes = classes;
+        this.appRole = appRole;
     }
 
     public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
@@ -46,6 +67,7 @@ public class Teacher {
         this.image = image;
         this.appRole = appRole;
     }
+
 
     public List<Class> getClasses() {
         return classes;

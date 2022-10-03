@@ -1,5 +1,8 @@
 package com.example.demo.model.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,11 +16,15 @@ public class Class {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Double price;
+
     @OneToMany(targetEntity = Payment.class,fetch = FetchType.EAGER)
     private List<Payment> payment;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Student.class,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Student> students;
+
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
@@ -29,7 +36,6 @@ public class Class {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
     }
 
     public Class(Long id, String name, LocalDate startDate, LocalDate endDate, Double price, List<Payment> payment) {
@@ -37,8 +43,43 @@ public class Class {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
         this.payment = payment;
+    }
+
+    public Class(Long id, String name, LocalDate startDate, LocalDate endDate, List<Payment> payment, Teacher teacher) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.payment = payment;
+        this.teacher = teacher;
+    }
+
+
+    public Class(Long id, String name, LocalDate startDate, LocalDate endDate, List<Payment> payment, List<Student> students, Teacher teacher) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.payment = payment;
+        this.students = students;
+        this.teacher = teacher;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public Long getId() {
@@ -73,13 +114,6 @@ public class Class {
         this.endDate = endDate;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public List<Payment> getPayment() {
         return payment;
