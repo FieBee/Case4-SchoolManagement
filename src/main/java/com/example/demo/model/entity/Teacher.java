@@ -23,10 +23,10 @@ public class Teacher {
     private String password;
     private String image;
 
-    @OneToMany(targetEntity = Class.class)
-    private List<Class> payment;
+    @OneToMany(targetEntity = Class.class, fetch = FetchType.EAGER)
+    private List<Class> classes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private AppRole appRole;
 
     public Teacher() {
@@ -47,12 +47,12 @@ public class Teacher {
         this.appRole = appRole;
     }
 
-    public List<Class> getPayment() {
-        return payment;
+    public List<Class> getClasses() {
+        return classes;
     }
 
-    public void setPayment(List<Class> payment) {
-        this.payment = payment;
+    public void setClasses(List<Class> classes) {
+        this.classes = classes;
     }
 
     public Long getId() {

@@ -17,6 +17,10 @@ public class Class {
     @OneToMany(targetEntity = Payment.class,fetch = FetchType.EAGER)
     private List<Payment> payment;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
     public Class() {
     }
 
