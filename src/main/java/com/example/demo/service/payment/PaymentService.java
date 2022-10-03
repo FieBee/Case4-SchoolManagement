@@ -1,7 +1,7 @@
 package com.example.demo.service.payment;
 
-import com.example.demo.Payment;
-import com.example.demo.repository.PaymentRepository;
+import com.example.demo.model.entity.Payment;
+import com.example.demo.repository.PaymentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class PaymentService implements IPaymentService{
     @Autowired
-    private PaymentRepository paymentRepository;
+    private PaymentRepo paymentRepository;
 
     @Override
     public Iterable<Payment> findAll() {
