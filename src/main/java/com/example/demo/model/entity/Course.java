@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,26 +10,27 @@ import javax.persistence.Table;
 public class Course {
 
     @Id
-    private Integer id;
+    private Long id;
     private Integer lessons;
     private String description;
     private String term;
 
+
     public Course() {
     }
 
-    public Course(Integer id, Integer lessons, String description, String term) {
+    public Course(Long id, Integer lessons, String description, String term) {
         this.id = id;
         this.lessons = lessons;
         this.description = description;
         this.term = term;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

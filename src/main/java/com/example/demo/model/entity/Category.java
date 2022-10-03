@@ -1,30 +1,45 @@
-package com.example.demo.model;
+package com.example.demo.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
 public class Category {
 
     @Id
-    private Integer id;
+    private Long id;
     private String nameCategory;
+
+    @OneToMany
+    private List<Course> courseList;
 
     public Category() {
     }
 
-    public Category(Integer id, String nameCategory) {
+    public Category(Long id, String nameCategory, List<Course> courseList) {
         this.id = id;
         this.nameCategory = nameCategory;
+        this.courseList = courseList;
     }
 
-    public Integer getId() {
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

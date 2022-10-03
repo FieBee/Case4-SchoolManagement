@@ -1,4 +1,4 @@
-package com.example.demo.repo;
+package com.example.demo.repository;
 
 import com.example.demo.model.dto.AppRole;
 import org.springframework.data.repository.CrudRepository;
