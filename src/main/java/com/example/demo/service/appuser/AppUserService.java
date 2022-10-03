@@ -1,10 +1,8 @@
 package com.example.demo.service.appuser;
 
-<<<<<<< HEAD
-import com.example.demo.model.AppUser;
-=======
+
 import com.example.demo.model.dto.AppUser;
->>>>>>> dev
+
 import com.example.demo.repository.AppUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
