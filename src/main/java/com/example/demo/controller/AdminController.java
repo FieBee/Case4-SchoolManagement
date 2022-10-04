@@ -12,7 +12,5 @@ public class AdminController {
     public ModelAndView homeAdmin(){
 
         return new ModelAndView("/index");
-
-
     }
 }

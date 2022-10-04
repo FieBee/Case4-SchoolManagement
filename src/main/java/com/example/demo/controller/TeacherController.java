@@ -6,9 +6,14 @@ import com.example.demo.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -37,12 +42,12 @@ public class TeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<Teacher> save(@RequestBody Teacher teacher) {
+    public ResponseEntity<Teacher> save(@Valid @RequestBody Teacher teacher) {
         return new ResponseEntity<>(teacherService.save(teacher), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
+    public ResponseEntity<Teacher> updateTeacher(@Valid @PathVariable Long id, @RequestBody Teacher teacher) {
         Optional<Teacher> teachers = teacherService.findById(id);
         if (!teachers.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,5 +64,17 @@ public class TeacherController {
         }
         teacherService.remove(id);
         return new ResponseEntity<>(teachers.get(),HttpStatus.OK);
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }
