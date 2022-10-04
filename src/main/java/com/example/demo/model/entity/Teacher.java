@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -40,41 +41,10 @@ public class Teacher {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Class> classes;
 
-    @ManyToOne
-    private AppRole appRole;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<AppRole> appRole;
 
     public Teacher() {
-    }
-
-    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, List<Class> classes, AppRole appRole) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.image = image;
-        this.classes = classes;
-        this.appRole = appRole;
-    }
-
-    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.image = image;
-        this.appRole = appRole;
     }
 
 
@@ -174,11 +144,11 @@ public class Teacher {
         this.image = image;
     }
 
-    public AppRole getAppRole() {
+    public Set<AppRole> getAppRole() {
         return appRole;
     }
 
-    public void setAppRole(AppRole appRole) {
+    public void setAppRole(Set<AppRole> appRole) {
         this.appRole = appRole;
     }
 }

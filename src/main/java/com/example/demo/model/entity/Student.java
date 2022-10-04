@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "student")
@@ -47,8 +48,8 @@ public class Student {
 
     @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
-    @ManyToOne
-    private AppRole appRole;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<AppRole> appRole;
 
     private String image;
 
@@ -56,61 +57,6 @@ public class Student {
     public Student() {
     }
 
-    public Student(String account, String password, AppRole appRole) {
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-    }
-
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.courses = courses;
-        this.classes = classes;
-        this.payment = payment;
-        this.appRole = appRole;
-        this.image = image;
-    }
-
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.courses = courses;
-        this.payment = payment;
-        this.appRole = appRole;
-        this.image = image;
-    }
-
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-        this.image = image;
-    }
 
         public Class getClasses() {
         return classes;
@@ -216,11 +162,11 @@ public class Student {
         this.password = password;
     }
 
-    public AppRole getAppRole() {
+    public Set<AppRole> getAppRole() {
         return appRole;
     }
 
-    public void setAppRole(AppRole appRole) {
+    public void setAppRole(Set<AppRole> appRole) {
         this.appRole = appRole;
     }
 

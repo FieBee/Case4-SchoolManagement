@@ -1,8 +1,9 @@
 package com.example.demo.config.filter;
 
 
-import com.example.demo_spring_security.services.AppUserService;
-import com.example.demo_spring_security.services.JwtService;
+import com.example.demo.service.JwtService;
+import com.example.demo.service.student.StudentService;
+import com.example.demo.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private AppUserService userService;
+    private StudentService studentService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,13 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // lấy username trong token
                 String username = jwtService.getUserNameFromJwtToken(token);
                 // lấy ra UserDetails thông qua username
-                UserDetails userDetails = userService.loadUserByUsername(username);
+                UserDetails userDetails1 = studentService.loadUserByUsername(username);
+                UserDetails userDetails2 = teacherService.loadUserByUsername(username);
 
                 // thực hiện việc xắc thực thông qua token.
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                UsernamePasswordAuthenticationToken authentication1 = new UsernamePasswordAuthenticationToken(
+                        userDetails1, null, userDetails1.getAuthorities());
+                authentication1.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication1);
+
+
+                UsernamePasswordAuthenticationToken authentication2 = new UsernamePasswordAuthenticationToken(
+                        userDetails2, null, userDetails2.getAuthorities());
+                authentication2.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication2);
             }
         } catch (Exception e) {
             logger.error("Can NOT set user authentication -> Message: {}", e);

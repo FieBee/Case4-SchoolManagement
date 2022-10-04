@@ -61,6 +61,13 @@ public class TeacherToken {
         this.appRole = appRole;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public List<Class> getClasses() {
         return classes;
