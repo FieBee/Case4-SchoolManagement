@@ -1,7 +1,5 @@
 package com.example.demo.model.entity;
 
-import com.example.demo.model.dto.AppRole;
-
 import javax.persistence.*;
 
 @Entity

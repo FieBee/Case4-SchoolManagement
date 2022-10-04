@@ -5,64 +5,44 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "student")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class StudentToken {
     private Long id;
     private LocalDate birth;
-    @NotNull
     private String address;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    @Email
     private String email;
-    @NotEmpty
     private String phone;
-    @NotEmpty
     private String active;
-    @NotEmpty
     private String account;
-    @NotEmpty
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
     private String password;
+    private String token;
 
-    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> courses;
 
-    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "class_id")
     private Class classes;
 
-    @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
-    @ManyToOne
+
     private AppRole appRole;
 
     private String image;
 
 
-    public Student() {
+    public StudentToken() {
     }
 
-    public Student(String account, String password, AppRole appRole) {
+    public StudentToken(String account, String password, AppRole appRole) {
         this.account = account;
         this.password = password;
         this.appRole = appRole;
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
+    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -80,7 +60,7 @@ public class Student {
         this.image = image;
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
+    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -97,7 +77,7 @@ public class Student {
         this.image = image;
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
+    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -112,7 +92,7 @@ public class Student {
         this.image = image;
     }
 
-        public Class getClasses() {
+    public Class getClasses() {
         return classes;
     }
 

@@ -3,7 +3,6 @@ package com.example.demo.model.entity;
 import com.example.demo.model.dto.AppRole;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "teacher")

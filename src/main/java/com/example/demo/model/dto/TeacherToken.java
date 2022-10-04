@@ -5,64 +5,32 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "student")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class TeacherToken {
+
     private Long id;
     private LocalDate birth;
-    @NotNull
     private String address;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    @Email
     private String email;
-    @NotEmpty
     private String phone;
-    @NotEmpty
     private String active;
-    @NotEmpty
     private String account;
-    @NotEmpty
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
     private String password;
+    private String token;
+    private String image;
+    private List<Class> classes;
 
-    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Course> courses;
-
-    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "class_id")
-    private Class classes;
-
-    @OneToMany(targetEntity = Payment.class)
-    private List<Payment> payment;
-    @ManyToOne
     private AppRole appRole;
 
-    private String image;
-
-
-    public Student() {
+    public TeacherToken() {
     }
 
-    public Student(String account, String password, AppRole appRole) {
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-    }
-
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
+    public TeacherToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, List<Class> classes, AppRole appRole) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -73,14 +41,12 @@ public class Student {
         this.active = active;
         this.account = account;
         this.password = password;
-        this.courses = courses;
+        this.image = image;
         this.classes = classes;
-        this.payment = payment;
         this.appRole = appRole;
-        this.image = image;
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
+    public TeacherToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
         this.id = id;
         this.birth = birth;
         this.address = address;
@@ -91,49 +57,17 @@ public class Student {
         this.active = active;
         this.account = account;
         this.password = password;
-        this.courses = courses;
-        this.payment = payment;
-        this.appRole = appRole;
         this.image = image;
+        this.appRole = appRole;
     }
 
-    public Student(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-        this.image = image;
-    }
 
-        public Class getClasses() {
+    public List<Class> getClasses() {
         return classes;
     }
 
-    public void setClasses(Class classes) {
+    public void setClasses(List<Class> classes) {
         this.classes = classes;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public List<Payment> getPayment() {
-        return payment;
-    }
-
-    public void setPayment(List<Payment> payment) {
-        this.payment = payment;
     }
 
     public Long getId() {
@@ -216,14 +150,6 @@ public class Student {
         this.password = password;
     }
 
-    public AppRole getAppRole() {
-        return appRole;
-    }
-
-    public void setAppRole(AppRole appRole) {
-        this.appRole = appRole;
-    }
-
     public String getImage() {
         return image;
     }
@@ -231,5 +157,12 @@ public class Student {
     public void setImage(String image) {
         this.image = image;
     }
-}
 
+    public AppRole getAppRole() {
+        return appRole;
+    }
+
+    public void setAppRole(AppRole appRole) {
+        this.appRole = appRole;
+    }
+}
