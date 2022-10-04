@@ -6,6 +6,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -17,13 +21,20 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate birth;
+    @NotNull
     private String address;
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
+    @Email
     private String email;
+    @NotEmpty
     private String phone;
     private String active;
+    @NotEmpty
     private String account;
+    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
     private String password;
     private String image;
 

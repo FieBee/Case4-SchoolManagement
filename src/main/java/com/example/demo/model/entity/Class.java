@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,8 +14,11 @@ public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private LocalDate startDate;
+    @NotEmpty
     private LocalDate endDate;
 
     @OneToMany(targetEntity = Payment.class,fetch = FetchType.EAGER)

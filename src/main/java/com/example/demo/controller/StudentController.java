@@ -8,9 +8,14 @@ import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -64,12 +69,12 @@ public class StudentController {
 
 
     @PostMapping
-    public ResponseEntity<Student> save(@RequestBody Student customer){
+    public ResponseEntity<Student> save(@Valid @RequestBody Student customer){
         return new ResponseEntity<>(studentService.save(customer), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody Student customer){
+    public ResponseEntity<Student> updateStudent(@Valid @PathVariable Long id,@RequestBody Student customer){
         Optional<Student> students = studentService.findById(id);
         if (!students.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -87,10 +92,18 @@ public class StudentController {
         studentService.remove(id);
         return new ResponseEntity<>(students.get(),HttpStatus.OK);
     }
-
-
-
-
-
-
+//    sử dụng @ExceptionHandler annotation để bắt MethodArgumentNotValidException ném ra từ Spring Boot khi có
+//    lỗi validate để xử lý và trả về kết quả lỗi cho client.
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+        MethodArgumentNotValidException ex) {
+    Map<String, String> errors = new HashMap<>();
+    ex.getBindingResult().getAllErrors().forEach((error) -> {
+        String fieldName = ((FieldError) error).getField();
+        String errorMessage = error.getDefaultMessage();
+        errors.put(fieldName, errorMessage);
+    });
+    return errors;
+    }
 }
