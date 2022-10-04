@@ -48,7 +48,7 @@
     }
     successHandler();
 
-    function addNewCustomer() {
+    function addNewTeacher() {
       //lay du lieu
       let name = $('#name').val();
       let age = $('#age').val();
@@ -79,7 +79,7 @@
       $.ajax({
         type: "DELETE",
         //tên API
-        url: `/api/customers/`+id,
+        url: `/teacher/`+id,
         //xử lý khi thành công
         success: function (){
           successHandler()
