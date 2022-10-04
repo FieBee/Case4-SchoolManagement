@@ -10,6 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController {
     @GetMapping
     public ModelAndView homeAdmin(){
+
         return new ModelAndView("/index");
+
+
     }
 }
