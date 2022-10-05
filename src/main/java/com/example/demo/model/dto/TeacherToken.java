@@ -1,7 +1,7 @@
 package com.example.demo.model.dto;
 
 import com.example.demo.model.dto.AppRole;
-import lombok.Data;
+//import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
