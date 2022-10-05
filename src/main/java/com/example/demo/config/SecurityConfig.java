@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -33,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/login","/register").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/login","/register").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated()
                 .and().csrf().disable();
 
@@ -42,6 +44,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling();
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
     }
+
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/home").permitAll()
+//                .and()
+//                .authorizeRequests().antMatchers("/admin").hasRole("ADMIN").and()
+//                .authorizeRequests().antMatchers("/student").hasAnyRole("STUDENT").and()
+//                .authorizeRequests().antMatchers("/teacher").hasAnyRole("TEACHER")
+//                .and()
+//                .formLogin()
+//                .and()
+//                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+//        http.csrf().disable();
+//
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling();
+//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+//    }
 
     // xắc thực
     @Override

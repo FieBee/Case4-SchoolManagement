@@ -5,12 +5,14 @@ import com.example.demo.model.entity.Category;
 import com.example.demo.model.entity.Student;
 import com.example.demo.repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -42,7 +44,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepo.findByAccount(username);
-        return new User(account.getAccount(),account.getPassword(),account.getAppRole());
+        return new User(account.getAccount(),account.getPassword(),  account.getAppRole());
     }
     @Override
     public Account findByAccount(String account){

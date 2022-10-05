@@ -53,7 +53,7 @@ public class LoginAPI {
 
             AccountToken accountToken = AccountToken.builder().account(account1.getAccount())
                     .password(account1.getPassword())
-                    .appRole(account1.getAppRole())
+                    .appRole( account1.getAppRole())
                     .token(token)
                     .build();
             return new ResponseEntity<>(accountToken,HttpStatus.OK);

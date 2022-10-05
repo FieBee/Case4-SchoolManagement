@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,12 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     AccountService accountService;
 
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private TeacherService teacherService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -42,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = jwtService.getAccountFromJwtToken(token);
                 // lấy ra UserDetails thông qua username
                 UserDetails userDetails1 = accountService.loadUserByUsername(username);
-//                UserDetails userDetails2 = teacherService.loadUserByUsername(username);
+////                UserDetails userDetails2 = teacherService.loadUserByUsername(username);
 
                 // thực hiện việc xắc thực thông qua token.
                 UsernamePasswordAuthenticationToken authentication1 = new UsernamePasswordAuthenticationToken(
@@ -55,6 +50,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //                        userDetails2, null, userDetails2.getAuthorities());
 //                authentication2.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 //                SecurityContextHolder.getContext().setAuthentication(authentication2);
+            }
+            else {
+
             }
         } catch (Exception e) {
             logger.error("Can NOT set user authentication -> Message: {}", e);

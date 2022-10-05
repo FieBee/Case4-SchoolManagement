@@ -26,5 +26,4 @@ public class Category {
     @OneToMany
     private List<Course> courseList;
 
-
 }
