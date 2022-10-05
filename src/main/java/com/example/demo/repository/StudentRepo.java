@@ -11,4 +11,6 @@ public interface StudentRepo extends PagingAndSortingRepository<Student, Long> {
     Student findStudentById(Long id);
     Optional<Student> findByLastName(String name);
 
+    Student findByAccount(String account);
+
 }

@@ -1,64 +1,68 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.dto;
 
 import com.example.demo.model.dto.AppRole;
+import com.example.demo.model.entity.Course;
+import com.example.demo.model.entity.Payment;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "student")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class StudentToken {
     private Long id;
     private LocalDate birth;
-    @NotNull
     private String address;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    @Email
     private String email;
-    @NotEmpty
     private String phone;
-    @NotEmpty
     private String active;
-    @NotEmpty
     private String account;
-    @NotEmpty
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
     private String password;
+    private String token;
 
-    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> courses;
 
-    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "class_id")
     private Class classes;
 
-    @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
-    @ManyToMany(fetch = FetchType.EAGER)
+
     private Set<AppRole> appRole;
 
     private String image;
 
 
-    public Student() {
+    public StudentToken() {
     }
 
+    public StudentToken(Long id, String account, String token, Set<AppRole> appRole) {
+        this.id = id;
+        this.account = account;
+        this.token = token;
+        this.appRole = appRole;
+    }
 
-        public Class getClasses() {
+    public Set<AppRole> getAppRole() {
+        return appRole;
+    }
+
+    public void setAppRole(Set<AppRole> appRole) {
+        this.appRole = appRole;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Class getClasses() {
         return classes;
     }
 
@@ -160,14 +164,6 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<AppRole> getAppRole() {
-        return appRole;
-    }
-
-    public void setAppRole(Set<AppRole> appRole) {
-        this.appRole = appRole;
     }
 
     public String getImage() {

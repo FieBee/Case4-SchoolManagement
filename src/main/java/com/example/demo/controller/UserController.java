@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     @GetMapping()
     public ModelAndView getUser(){
-        return new ModelAndView("test/  user");
+
+        return new ModelAndView("test/user");
+
     }
 }
