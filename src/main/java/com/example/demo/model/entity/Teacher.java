@@ -4,12 +4,10 @@ import com.example.demo.model.dto.AppRole;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -22,20 +20,13 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate birth;
-    @NotNull
     private String address;
-    @NotEmpty
     private String firstName;
-    @NotEmpty
     private String lastName;
-    @Email
     private String email;
-    @NotEmpty
     private String phone;
     private String active;
-    @NotEmpty
     private String account;
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
     private String password;
     private String image;
 
@@ -43,10 +34,41 @@ public class Teacher {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Class> classes;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<AppRole> appRole;
+    @ManyToOne
+    private AppRole appRole;
 
     public Teacher() {
+    }
+
+    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, List<Class> classes, AppRole appRole) {
+        this.id = id;
+        this.birth = birth;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.account = account;
+        this.password = password;
+        this.image = image;
+        this.classes = classes;
+        this.appRole = appRole;
+    }
+
+    public Teacher(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
+        this.id = id;
+        this.birth = birth;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.account = account;
+        this.password = password;
+        this.image = image;
+        this.appRole = appRole;
     }
 
 
@@ -146,11 +168,11 @@ public class Teacher {
         this.image = image;
     }
 
-    public Set<AppRole> getAppRole() {
+    public AppRole getAppRole() {
         return appRole;
     }
 
-    public void setAppRole(Set<AppRole> appRole) {
+    public void setAppRole(AppRole appRole) {
         this.appRole = appRole;
     }
 }
