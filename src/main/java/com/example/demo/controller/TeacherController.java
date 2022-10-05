@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
@@ -44,21 +42,8 @@ public class TeacherController {
         return new ResponseEntity<>(teachers.get(),HttpStatus.OK);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Teacher> save(@RequestBody Teacher teacher) {
-//        return new ResponseEntity<>(teacherService.save(teacher), HttpStatus.CREATED);
-//    }
-
-
     @PostMapping
-    public ResponseEntity<Teacher> save(@RequestPart("file")MultipartFile file, @RequestPart("teacher")Teacher teacher) {
-        String fileName = file.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(file.getBytes(), new File(upload + fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        teacher.setImage(file.getOriginalFilename());
+    public ResponseEntity<Teacher> save(@RequestBody Teacher teacher) {
         return new ResponseEntity<>(teacherService.save(teacher), HttpStatus.CREATED);
     }
 
@@ -84,7 +69,7 @@ public class TeacherController {
 
     @GetMapping("/list")
     public ModelAndView getAllTeacher() {
-        ModelAndView modelAndView = new ModelAndView("/test/ajaxProduct");
+        ModelAndView modelAndView = new ModelAndView("/test/ajaxTeacher");
         modelAndView.addObject("customers", teacherService.findAll());
         return modelAndView;
     }
