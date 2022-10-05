@@ -1,7 +1,8 @@
 package com.example.demo.config;
 
 import com.example.demo.config.filter.JwtAuthenticationFilter;
-import com.example.demo.service.student.StudentService;
+import com.example.demo.service.account.AccountService;
+import com.example.demo.service.account.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    StudentService studentService;
+    AccountService accountService;
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -45,6 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // xắc thực
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(studentService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(accountService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }

@@ -26,8 +26,16 @@ public class Teacher {
     private String email;
     private String phone;
     private String active;
+<<<<<<< HEAD
     private String account;
     private String password;
+=======
+
+    @OneToOne
+    @NotEmpty
+    private Account account;
+
+>>>>>>> phuong
     private String image;
 
     @OneToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
@@ -144,20 +152,13 @@ public class Teacher {
         this.active = active;
     }
 
-    public String getAccount() {
+
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(String account) {
+    public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getImage() {
