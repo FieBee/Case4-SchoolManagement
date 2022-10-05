@@ -12,12 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TeacherService implements ITeacherService, UserDetailsService {
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Teacher teacher = teacherRepo.findByAccount(username);
-        return new User(teacher.getAccount(), teacher.getPassword(), teacher.getAppRole());
-    }
+public class TeacherService implements ITeacherService {
+
 
     @Autowired
     TeacherRepo teacherRepo;

@@ -31,10 +31,11 @@ public class Teacher {
     @NotEmpty
     private String phone;
     private String active;
+
+    @OneToOne
     @NotEmpty
-    private String account;
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
-    private String password;
+    private Account account;
+
     private String image;
 
     @OneToMany(targetEntity = Class.class,fetch = FetchType.EAGER)
@@ -120,20 +121,13 @@ public class Teacher {
         this.active = active;
     }
 
-    public String getAccount() {
+
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(String account) {
+    public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getImage() {

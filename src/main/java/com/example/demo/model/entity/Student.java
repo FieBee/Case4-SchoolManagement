@@ -32,11 +32,11 @@ public class Student {
     private String phone;
     @NotEmpty
     private String active;
+
+
+    @OneToOne
     @NotEmpty
-    private String account;
-    @NotEmpty
-    @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
-    private String password;
+    private Account account;
 
     @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -58,7 +58,7 @@ public class Student {
     }
 
 
-        public Class getClasses() {
+    public Class getClasses() {
         return classes;
     }
 
@@ -146,20 +146,12 @@ public class Student {
         this.active = active;
     }
 
-    public String getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(String account) {
+    public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Set<AppRole> getAppRole() {
@@ -177,5 +169,7 @@ public class Student {
     public void setImage(String image) {
         this.image = image;
     }
+
+
 }
 

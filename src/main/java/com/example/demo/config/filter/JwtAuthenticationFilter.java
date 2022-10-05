@@ -2,6 +2,7 @@ package com.example.demo.config.filter;
 
 
 import com.example.demo.service.JwtService;
+import com.example.demo.service.account.AccountService;
 import com.example.demo.service.student.StudentService;
 import com.example.demo.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
+    AccountService accountService;
+
+    @Autowired
     private StudentService studentService;
 
     @Autowired
@@ -37,8 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // lấy username trong token
                 String username = jwtService.getAccountFromJwtToken(token);
                 // lấy ra UserDetails thông qua username
-                UserDetails userDetails1 = studentService.loadUserByUsername(username);
-                UserDetails userDetails2 = teacherService.loadUserByUsername(username);
+                UserDetails userDetails1 = accountService.loadUserByUsername(username);
+//                UserDetails userDetails2 = teacherService.loadUserByUsername(username);
 
                 // thực hiện việc xắc thực thông qua token.
                 UsernamePasswordAuthenticationToken authentication1 = new UsernamePasswordAuthenticationToken(
@@ -47,10 +51,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication1);
 
 
-                UsernamePasswordAuthenticationToken authentication2 = new UsernamePasswordAuthenticationToken(
-                        userDetails2, null, userDetails2.getAuthorities());
-                authentication2.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authentication2);
+//                UsernamePasswordAuthenticationToken authentication2 = new UsernamePasswordAuthenticationToken(
+//                        userDetails2, null, userDetails2.getAuthorities());
+//                authentication2.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                SecurityContextHolder.getContext().setAuthentication(authentication2);
             }
         } catch (Exception e) {
             logger.error("Can NOT set user authentication -> Message: {}", e);

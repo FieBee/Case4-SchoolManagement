@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 @Service
-public class StudentService implements IStudentService, UserDetailsService {
+public class StudentService implements IStudentService {
 
     @Autowired
     StudentRepo studentRepo;
@@ -39,12 +39,12 @@ public class StudentService implements IStudentService, UserDetailsService {
         studentRepo.deleteById(id);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        Student student = studentRepo.findByAccount(account);
-        return new User(student.getAccount(), student.getPassword(), student.getAppRole());
-    }
-
+//    @Override
+//    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+//        Student student = studentRepo.findByAccount(account);
+//        return new User(student.getAccount(), student.getPassword(), student.getAppRole());
+//    }
+//
     @Override
     public Student findStudentByAccount(String account){
         Student student = studentRepo.findByAccount(account);
