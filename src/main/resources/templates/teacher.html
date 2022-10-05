@@ -1,79 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function successHandler() {
+            $.ajax({
+                type: "GET",
+                url: "/api/customers",
+                success: function (data) {
+                    let content = '    <tr>\n' +
+                        '        <td>ID</td>\n' +
+                        '        <td>First Name</td>\n' +
+                        '        <td>Last Name</td>\n' +
+                        '        <td>Update</td>\n' +
+                        '        <td>Delete</td>\n' +
+                        '    </tr>';
+                    console.log(data);
+                    if(data==null){
+                        document.getElementById('customers').innerHTML = content;
+                    }else
+                        for (let i = 0; i < data.content.length; i++) {
+                            content += getCustomer(data.content[i]);
+                        }
+                    document.getElementById('customers').innerHTML = content;
+                }
+            })
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+        function getCustomer(customer) {
+            return `<tr><td> ${customer.id}</td><td>${customer.firstName}</td><td>${customer.lastName}</td>`+
+                `<td><a class="updateCustomer" href="${customer.id}" onclick="showFormUpdate(this)">Update</a> </td><td><a class="deleteCustomer" href="${customer.id}" onclick="deleteCustomer(this)">Delete</a> </td></tr>`;
+        }
+        function addNewCustomer() {
+            let firstName = $('#firstName').val();
+            let lastName = $('#lastName').val();
+            let newCustomer = {
+                firstName: firstName,
+                lastName: lastName
+            };
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(newCustomer),
+                url: "/api/customers",
+                success: function (data){
+                    successHandler();
+                }
+            });
+
+            event.preventDefault();
+        }
+        function deleteCustomer(element) {
+            let id = element.getAttribute("href");
+            console.log(id);
+            $.ajax({
+                type: "DELETE",
+                url: `/api/customers/${id}`,
+                success: function (data) {
+                    console.log(id);
+
+                    successHandler();
+                }
+
+            })
+
+            event.preventDefault();
+        }
+
+        function showFormUpdate(element){
+            let id = element.getAttribute("href");
+            console.log(id);
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "GET",
+                url: `/api/customers/${id}`,
+                success: function (data) {
+                    console.log(data);
+                    console.log(id);
+                    $('#id').attr('value',`${data.id}`)
+                    $('#firstName').attr('value',`${data.firstName}`)
+                    $('#lastName').attr('value',`${data.lastName}`)
+                }
+            })
+
+            event.preventDefault();
+        }
+
+        function updateCustomer() {
+            let id = $('#id').val();
+            let firstName= $('#firstName').val();
+            let lastName= $('#lastName').val();
+            let customer={
+                firstName:firstName,
+                lastName:lastName
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: `/api/customers/${id}`,
+                data:JSON.stringify(customer),
+                success: function (data) {
+                    console.log(id);
+                    successHandler();
+                }
+            })
+
+            event.preventDefault();
+        }
+        function searchCustomer(){
+            let search= $('#search').val();
+
+            $.ajax({
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type:"GET",
+                url: `/api/customers?search=${search}`,
+                success:function (data){
+
+                    let str = '    <tr>\n' +
+                        '        <td>ID</td>\n' +
+                        '        <td>First Name</td>\n' +
+                        '        <td>Last Name</td>\n' +
+                        '        <td>Action</td>\n' +
+                        '    </tr>';
+
+                    for (let i = 0; i < data.content.length; i++) {
+                        str += getCustomer(data.content[i]);
+                    }
+                    document.getElementById('customers').innerHTML = str;
+                }
+            })
+
+            event.preventDefault();
+        }
+
+    </script>
 </head>
 <body>
-
-<div class="container">
-    <h2>Basic Table</h2>
-    <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>
-    <table class="table">
-        <thead>
+<h1>Customer</h1>
+<a href="/api/customers/list">List</a>
+<form >
+    <input type="text" id="search" name="search" placeholder="search">
+    <input type="submit" value="Search" onclick="searchCustomer()">
+</form>
+<form id="addCustomer">
+    <table>
         <tr>
-            <th>id</th>
-            <th>username</th>
-            <th>pass</th>
+            <td><input type="text" id="id" placeholder="id" hidden></td>
         </tr>
-        </thead>
-        <tbody id="show">
+        <tr>
+            <td>First Name:</td>
+            <td><input type="text" id="firstName" placeholder="firstName"></td>
+        </tr>
+        <tr>
+            <td>last Name:</td>
+            <td><input type="text" id="lastName" placeholder="lastName"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Add" onclick="addNewCustomer() "></td>
+        </tr>
 
-        </tbody>
+        <tr>
+            <td><input type="submit" value="Update" onclick="updateCustomer() "></td>
+        </tr>
     </table>
-</div>
+</form>
 
+<table border="1px" id="customers">
+    <tr>
+        <td>ID</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Update</td>
+        <td>Delete</td>
+    </tr>
+    <th:block th:each="cus: ${customer}">
+        <tr>
+            <td th:text="${cus.id}"></td>
+            <td th:text="${cus.firstName}"></td>
+            <td th:text="${cus.lastName}"></td>
+            <td><a class="updateCustomer" th:href="${cus.getId()}" onclick="showFormUpdate(this)">Update</a></td>
+            <td><a class="deleteCustomer" th:href="${cus.getId()}" onclick="deleteCustomer(this)">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
 </body>
 </html>
-<script>
-    let token = localStorage.getItem("token");
-    $.ajax({
-        type: "GET",
-        headers: {
-            'Accept': 'application/json'
-        },
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader ("Authorization", "Bearer " + token);
-        },
-        url: "http://localhost:8080/user",
-        success: function (data) {
-            show(data)
-        },
-        error: function (err) {
-            console.log(err)
-        }
-    })
-
-    function parseJwt (token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        return JSON.parse(jsonPayload);
-    };
-
-    console.log("parseJwt(token)");
-    console.log(parseJwt(token));
-
-    function show(data) {
-        let str = "";
-        for (const u of data) {
-            str += `<tr>
-                        <td>${u.id}</td>
-                        <td>${u.username}</td>
-                        <td>${u.password}</td>
-                    </tr>`
-        }
-        document.getElementById("show").innerHTML = str;
-    }
-
-</script>
