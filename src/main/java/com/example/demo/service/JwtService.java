@@ -37,7 +37,7 @@ public class JwtService {
     }
 
     // lấy username từ token
-    public String getUserNameFromJwtToken(String token) {
+    public String getAccountFromJwtToken(String token) {
         String userName = Jwts.parser()
                 .setSigningKey(KEY_Private)
                 .parseClaimsJws(token)

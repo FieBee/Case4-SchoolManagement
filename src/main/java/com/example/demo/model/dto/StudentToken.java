@@ -1,6 +1,8 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.dto;
 
 import com.example.demo.model.dto.AppRole;
+import com.example.demo.model.entity.Course;
+import com.example.demo.model.entity.Payment;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -29,7 +31,7 @@ public class StudentToken {
 
     private List<Payment> payment;
 
-    private AppRole appRole;
+    private Set<AppRole> appRole;
 
     private String image;
 
@@ -37,70 +39,19 @@ public class StudentToken {
     public StudentToken() {
     }
 
-    public StudentToken(String account, String password, AppRole appRole) {
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-    }
-
-    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, Class classes, List<Payment> payment, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.courses = courses;
-        this.classes = classes;
-        this.payment = payment;
-        this.appRole = appRole;
-        this.image = image;
-    }
-
-    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, List<Course> courses, List<Payment> payment, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.courses = courses;
-        this.payment = payment;
-        this.appRole = appRole;
-        this.image = image;
-    }
-
-    public StudentToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, AppRole appRole, String image) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.appRole = appRole;
-        this.image = image;
-    }
-
-    public StudentToken(Long id, String account, String token, AppRole appRole) {
+    public StudentToken(Long id, String account, String token, Set<AppRole> appRole) {
         this.id = id;
         this.account = account;
         this.token = token;
         this.appRole = appRole;
     }
 
-    public StudentToken(Long id, String account, String token, Set<AppRole> appRole) {
+    public Set<AppRole> getAppRole() {
+        return appRole;
+    }
+
+    public void setAppRole(Set<AppRole> appRole) {
+        this.appRole = appRole;
     }
 
     public String getToken() {
@@ -213,14 +164,6 @@ public class StudentToken {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public AppRole getAppRole() {
-        return appRole;
-    }
-
-    public void setAppRole(AppRole appRole) {
-        this.appRole = appRole;
     }
 
     public String getImage() {

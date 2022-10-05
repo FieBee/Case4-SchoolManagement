@@ -3,8 +3,8 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.dto.AppRole;
+import com.example.demo.model.dto.StudentToken;
 import com.example.demo.model.entity.Student;
-import com.example.demo.model.entity.StudentToken;
 import com.example.demo.service.JwtService;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.teacher.ITeacherService;

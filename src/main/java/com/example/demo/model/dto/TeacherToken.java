@@ -1,12 +1,14 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.dto;
 
 import com.example.demo.model.dto.AppRole;
+import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 
 public class TeacherToken {
@@ -25,39 +27,15 @@ public class TeacherToken {
     private String image;
     private List<Class> classes;
 
-    private AppRole appRole;
+    private Set<AppRole> appRole;
 
     public TeacherToken() {
     }
 
-    public TeacherToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, List<Class> classes, AppRole appRole) {
+    public TeacherToken(Long id, String account, String token, Set<AppRole> appRole) {
         this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
         this.account = account;
-        this.password = password;
-        this.image = image;
-        this.classes = classes;
-        this.appRole = appRole;
-    }
-
-    public TeacherToken(Long id, LocalDate birth, String address, String firstName, String lastName, String email, String phone, String active, String account, String password, String image, AppRole appRole) {
-        this.id = id;
-        this.birth = birth;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.account = account;
-        this.password = password;
-        this.image = image;
+        this.token = token;
         this.appRole = appRole;
     }
 
@@ -165,11 +143,5 @@ public class TeacherToken {
         this.image = image;
     }
 
-    public AppRole getAppRole() {
-        return appRole;
-    }
 
-    public void setAppRole(AppRole appRole) {
-        this.appRole = appRole;
-    }
 }
