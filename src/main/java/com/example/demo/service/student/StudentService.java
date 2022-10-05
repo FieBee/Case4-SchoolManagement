@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -45,4 +44,13 @@ public class StudentService implements IStudentService, UserDetailsService {
         Student student = studentRepo.findByAccount(account);
         return new User(student.getAccount(), student.getPassword(), student.getAppRole());
     }
+
+    @Override
+    public Student findStudentByAccount(String account){
+        Student student = studentRepo.findByAccount(account);
+        return student;
+    }
+
+
+
 }

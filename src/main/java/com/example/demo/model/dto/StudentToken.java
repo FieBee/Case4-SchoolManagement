@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 
 public class StudentToken {
@@ -90,6 +91,16 @@ public class StudentToken {
         this.password = password;
         this.appRole = appRole;
         this.image = image;
+    }
+
+    public StudentToken(Long id, String account, String token, AppRole appRole) {
+        this.id = id;
+        this.account = account;
+        this.token = token;
+        this.appRole = appRole;
+    }
+
+    public StudentToken(Long id, String account, String token, Set<AppRole> appRole) {
     }
 
     public String getToken() {
