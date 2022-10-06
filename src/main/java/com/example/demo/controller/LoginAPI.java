@@ -7,6 +7,7 @@ import com.example.demo.model.dto.AppRole;
 import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Student;
 import com.example.demo.service.JwtService;
+import com.example.demo.service.account.AccountService;
 import com.example.demo.service.account.IAccountService;
 import com.example.demo.service.student.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class LoginAPI {
     IStudentService studentService;
 
     @Autowired
-    IAccountService accountService;
+    AccountService accountService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account){
@@ -62,13 +63,13 @@ public class LoginAPI {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Student> register(@RequestBody Student appUser){
+    public ResponseEntity<Account> register(@RequestBody Account appUser){
         Set<AppRole> roles = new HashSet<>();
         AppRole role = new AppRole();
         role.setId(2L);
         roles.add(role);
         appUser.setAppRole(roles);
-        return new ResponseEntity<>(studentService.save(appUser), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.save(appUser), HttpStatus.OK);
     }
 
 }
