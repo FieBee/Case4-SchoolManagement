@@ -32,38 +32,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login","/register").permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
-                .and().csrf().disable();
-
-
+                .and()
+                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
+                .authorizeRequests().antMatchers("/student/**").hasRole("STUDENT").and()
+                .authorizeRequests().antMatchers("/teacher/**").hasRole("TEACHER")
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+        http.csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling();
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+
     }
 
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/home").permitAll()
-//                .and()
-//                .authorizeRequests().antMatchers("/admin").hasRole("ADMIN").and()
-//                .authorizeRequests().antMatchers("/student").hasAnyRole("STUDENT").and()
-//                .authorizeRequests().antMatchers("/teacher").hasAnyRole("TEACHER")
-//                .and()
-//                .formLogin()
-//                .and()
-//                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-//        http.csrf().disable();
-//
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling();
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-//    }
 
     // xắc thực
     @Override
