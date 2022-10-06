@@ -9,7 +9,6 @@ import com.example.demo.model.entity.Student;
 import com.example.demo.service.JwtService;
 import com.example.demo.service.account.IAccountService;
 import com.example.demo.service.student.IStudentService;
-import com.example.demo.service.teacher.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +70,5 @@ public class LoginAPI {
         appUser.setAppRole(roles);
         return new ResponseEntity<>(studentService.save(appUser), HttpStatus.OK);
     }
-
-
 
 }
