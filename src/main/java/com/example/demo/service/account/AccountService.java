@@ -2,17 +2,14 @@ package com.example.demo.service.account;
 
 import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Category;
-import com.example.demo.model.entity.Student;
 import com.example.demo.repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
 
 
@@ -22,17 +19,17 @@ public class AccountService implements IAccountService, UserDetailsService {
     AccountRepo accountRepo;
 
     @Override
-    public Iterable<Category> findAll() {
+    public Iterable<Account> findAll() {
         return null;
     }
 
     @Override
-    public Optional<Category> findById(Long id) {
+    public Optional<Account> findById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public Category save(Category category) {
+    public Account save(Account account) {
         return null;
     }
 

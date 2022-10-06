@@ -4,6 +4,6 @@ import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Category;
 import com.example.demo.service.GeneralService;
 
-public interface IAccountService extends GeneralService<Category> {
+public interface IAccountService extends GeneralService<Account> {
     Account findByAccount(String account);
 }

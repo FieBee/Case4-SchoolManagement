@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.model.entity.Account;
+
 import java.util.Optional;
 
 public interface GeneralService<T> {
