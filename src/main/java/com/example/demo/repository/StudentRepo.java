@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.entity.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +13,6 @@ public interface StudentRepo extends PagingAndSortingRepository<Student, Long> {
     Student findStudentById(Long id);
     Optional<Student> findByLastName(String name);
 
-    Student findByAccount(String account);
+    Page<Student> findAllByFirstNameContaining(String firstName, Pageable pageable);
 
 }

@@ -6,6 +6,8 @@ import com.example.demo.model.entity.Student;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -31,12 +33,15 @@ public class StudentController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Iterable<Student>> findAllStudent(){
-        List<Student> students = (List<Student>)studentService.findAll();
-        if (students.isEmpty()){
+    public ResponseEntity<Iterable<Student>> findAllCustomer(@RequestParam Optional<String> search, Pageable pageable) {
+        Page<Student> customers = studentService.findAll(pageable);
+        if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(students,HttpStatus.OK);
+        if (search.isPresent()) {
+            return new ResponseEntity<>(studentService.findAllByFirstNameContaining(search.get(), pageable), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
 //    @GetMapping

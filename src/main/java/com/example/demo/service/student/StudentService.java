@@ -5,6 +5,8 @@ import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Student;
 import com.example.demo.repository.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,12 +44,20 @@ public class StudentService implements IStudentService {
 //        return new User(student.getAccount(), student.getPassword(), student.getAppRole());
 //    }
 //
+//    @Override
+//    public Student findStudentByAccount(String account){
+//        Student student = studentRepo.findByAccount(account);
+//        return student;
+//    }
+
+
     @Override
-    public Student findStudentByAccount(String account){
-        Student student = studentRepo.findByAccount(account);
-        return student;
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepo.findAll(pageable);
     }
 
-
-
+    @Override
+    public Page<Student> findAllByFirstNameContaining(String firstName, Pageable pageable) {
+        return studentRepo.findAllByFirstNameContaining(firstName,pageable);
+    }
 }
