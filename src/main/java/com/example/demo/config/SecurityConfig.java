@@ -1,7 +1,8 @@
 package com.example.demo.config;
 
 import com.example.demo.config.filter.JwtAuthenticationFilter;
-import com.example.demo.service.student.StudentService;
+import com.example.demo.service.account.AccountService;
+import com.example.demo.service.account.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +14,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    StudentService studentService;
+    AccountService accountService;
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -32,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/login","/register").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/login","/register").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated()
                 .and().csrf().disable();
 
@@ -42,9 +45,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/home").permitAll()
+//                .and()
+//                .authorizeRequests().antMatchers("/admin").hasRole("ADMIN").and()
+//                .authorizeRequests().antMatchers("/student").hasAnyRole("STUDENT").and()
+//                .authorizeRequests().antMatchers("/teacher").hasAnyRole("TEACHER")
+//                .and()
+//                .formLogin()
+//                .and()
+//                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+//        http.csrf().disable();
+//
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling();
+//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+//    }
+
     // xắc thực
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(studentService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(accountService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }

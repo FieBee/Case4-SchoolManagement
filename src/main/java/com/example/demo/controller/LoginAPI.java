@@ -2,10 +2,12 @@ package com.example.demo.controller;
 
 
 
+import com.example.demo.model.dto.AccountToken;
 import com.example.demo.model.dto.AppRole;
-import com.example.demo.model.dto.StudentToken;
+import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Student;
 import com.example.demo.service.JwtService;
+import com.example.demo.service.account.IAccountService;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.teacher.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,23 +38,28 @@ public class LoginAPI {
     IStudentService studentService;
 
     @Autowired
-    ITeacherService teacherService;
+    IAccountService accountService;
 
     @PostMapping("/login")
-    public StudentToken login(@RequestBody Student appUser){
+    public ResponseEntity<?> login(@RequestBody Account account){
         try {
             // Tạo ra 1 đối tượng Authentication.
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(appUser.getAccount(), appUser.getPassword()));
+                    new UsernamePasswordAuthenticationToken(account.getAccount(), account.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtService.createToken(authentication);
-            Student student = studentService.findStudentByAccount(appUser.getAccount());
-            return new StudentToken(student.getId(),student.getAccount(),token,student.getAppRole());
+            Account account1 = accountService.findByAccount(account.getAccount());
+
+            AccountToken accountToken = AccountToken.builder().account(account1.getAccount())
+                    .password(account1.getPassword())
+                    .appRole( account1.getAppRole())
+                    .token(token)
+                    .build();
+            return new ResponseEntity<>(accountToken,HttpStatus.OK);
         } catch (Exception e) {
             return null;
         }
-
     }
 
     @PostMapping("/register")

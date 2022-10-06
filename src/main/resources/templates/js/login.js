@@ -22,7 +22,7 @@ function login() {
         success: function (data) {
             localStorage.setItem("token", data.token);
             console.log(data)
-            location.href = "home.html"
+            location.href = "homeee.html"
         },
         error: function (err) {
             console.log(err)

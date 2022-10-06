@@ -1,10 +1,19 @@
 package com.example.demo.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "payment")
 public class Payment {
     @Id
@@ -17,52 +26,5 @@ public class Payment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_id")
     private Class classes;
-    public Payment(){
-    }
 
-    public Payment(LocalDate paymentDate, Double amount, String status) {
-        this.paymentDate = paymentDate;
-        this.amount = amount;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Class getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Class classes) {
-        this.classes = classes;
-    }
 }
