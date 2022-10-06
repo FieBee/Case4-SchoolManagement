@@ -168,6 +168,35 @@
             })
             event.preventDefault();
         }
+        function searchStudent(){
+            let search= $('#search').val();
+
+            $.ajax({
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type:"GET",
+                url: `/api/customers?search=${search}`,
+                success:function (data){
+
+                    let str = '    <tr>\n' +
+                        '        <td>ID</td>\n' +
+                        '        <td>First Name</td>\n' +
+                        '        <td>Last Name</td>\n' +
+                        '        <td>Action</td>\n' +
+                        '    </tr>';
+
+                    for (let i = 0; i < data.content.length; i++) {
+                        str += getCustomer(data.content[i]);
+                    }
+                    document.getElementById('customers').innerHTML = str;
+                }
+            })
+
+            event.preventDefault();
+        }
+
 
     </script>
 
@@ -181,32 +210,41 @@
     </div>
 
     <button class="btn btn-primary" onclick="displayFormCreate()">Create new student</button>
+    <form >
+        <input type="text" id="search" name="search" placeholder="search">
+        <input type="submit" value="Search" onclick="searchStudent()">
+    </form>
 
-    <form id="form1">
+
+    <form id="form1" hidden>
         <input type="hidden" id="id" placeholder="id">
         <div class="mb-3 mt-3">
             <label for="firstName" class="form-label">First Name:</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Enter name">
+            <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
         </div>
         <div class="mb-3">
             <label for="lastName" class="form-label">Last Name:</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Enter price">
+            <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Birth:</label>
+            <input type="text" class="form-control" id="birth" placeholder="Enter birth">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="Enter weight">
+            <input type="text" class="form-control" id="email" placeholder="Enter email">
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">Phone:</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter description">
+            <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
         </div>
         <div class="mb-3">
             <label for="account" class="form-label">Account:</label>
-            <input type="text" class="form-control" id="account" placeholder="Enter description">
+            <input type="text" class="form-control" id="account" placeholder="Enter student's account">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="text" class="form-control" id="password" placeholder="Enter description">
+            <input type="text" class="form-control" id="password" placeholder="Enter password">
         </div>
         <button type="submit" id="form-button" class="btn btn-primary" onclick="addNewStudent()">Submit</button>
         <button type="submit" class="btn btn-primary" onclick="updateStudent()">Update</button>
