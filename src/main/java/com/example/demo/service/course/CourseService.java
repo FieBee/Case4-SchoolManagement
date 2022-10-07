@@ -1,18 +1,23 @@
 package com.example.demo.service.course;
 
-import com.example.demo.model.entity.Account;
+
 import com.example.demo.model.entity.Course;
 import com.example.demo.repository.CourseRepo;
+import com.example.demo.repository.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CourseService implements ICourseService{
+public class CourseService implements ICourseService {
 
     @Autowired
     CourseRepo courseRepo;
+
+    @Autowired
+    StudentRepo studentRepo;
 
     @Override
     public Iterable<Course> findAll() {
@@ -32,5 +37,10 @@ public class CourseService implements ICourseService{
     @Override
     public void remove(Long id) {
         courseRepo.deleteById(id);
+    }
+
+    @Override
+    public List<Course> showCourseByStudentId(Long id){
+        return studentRepo.findById(id).get().getCourses();
     }
 }
