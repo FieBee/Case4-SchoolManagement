@@ -20,22 +20,21 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Iterable<Account> findAll() {
-        return null;
+        return accountRepo.findAll();
     }
 
     @Override
     public Optional<Account> findById(Long id) {
-        return Optional.empty();
+        return accountRepo.findById(id);
     }
 
     @Override
     public Account save(Account account) {
-        return null;
+        return accountRepo.save(account);
     }
 
     @Override
     public void remove(Long id) {
-
     }
 
     @Override

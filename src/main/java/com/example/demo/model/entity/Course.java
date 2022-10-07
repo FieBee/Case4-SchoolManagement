@@ -16,8 +16,9 @@ import javax.persistence.*;
 public class Course {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer lessons;
+    private String lessons;
     private String description;
     private String term;
     private Double price;
