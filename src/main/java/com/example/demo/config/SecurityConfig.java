@@ -6,6 +6,7 @@ import com.example.demo.service.account.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -47,7 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling();
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+        http.cors().configurationSource(c -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.applyPermitDefaultValues();
+            configuration.addAllowedOriginPattern("*");
+//            configuration.addAllowedMethod(CorsConfiguration.ALL);
+            configuration.addAllowedMethod(HttpMethod.DELETE);
+            configuration.addAllowedMethod(HttpMethod.GET);
+            configuration.addAllowedMethod(HttpMethod.POST);
+            configuration.addAllowedMethod(HttpMethod.PUT);
+            configuration.addAllowedMethod(HttpMethod.HEAD);
+            return configuration;
+        });
+//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
     }
 

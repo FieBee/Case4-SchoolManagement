@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin("*")
 public class StudentController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class StudentController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Iterable<Student>> findAllCustomer(@RequestParam Optional<String> search, Pageable pageable) {
+    public ResponseEntity<Iterable<Student>> findAllStudent(@RequestParam Optional<String> search, Pageable pageable) {
         Page<Student> customers = studentService.findAll(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,18 +75,18 @@ public class StudentController {
 
 
     @PostMapping
-    public ResponseEntity<Student> save(@Valid @RequestBody Student customer){
-        return new ResponseEntity<>(studentService.save(customer), HttpStatus.CREATED);
+    public ResponseEntity<Student> save(@RequestBody Student student){
+        return new ResponseEntity<>(studentService.save(student), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@Valid @PathVariable Long id,@RequestBody Student customer){
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody  Student student){
         Optional<Student> students = studentService.findById(id);
         if (!students.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        customer.setId(students.get().getId());
-        return new ResponseEntity<>(studentService.save(customer),HttpStatus.OK);
+        student.setId(students.get().getId());
+        return new ResponseEntity<>(studentService.save(student),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -99,16 +100,16 @@ public class StudentController {
     }
 //    sử dụng @ExceptionHandler annotation để bắt MethodArgumentNotValidException ném ra từ Spring Boot khi có
 //    lỗi validate để xử lý và trả về kết quả lỗi cho client.
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-        MethodArgumentNotValidException ex) {
-    Map<String, String> errors = new HashMap<>();
-    ex.getBindingResult().getAllErrors().forEach((error) -> {
-        String fieldName = ((FieldError) error).getField();
-        String errorMessage = error.getDefaultMessage();
-        errors.put(fieldName, errorMessage);
-    });
-    return errors;
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public Map<String, String> handleValidationExceptions(
+//        MethodArgumentNotValidException ex) {
+//    Map<String, String> errors = new HashMap<>();
+//    ex.getBindingResult().getAllErrors().forEach((error) -> {
+//        String fieldName = ((FieldError) error).getField();
+//        String errorMessage = error.getDefaultMessage();
+//        errors.put(fieldName, errorMessage);
+//    });
+//    return errors;
+//    }
 }
