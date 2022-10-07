@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
+
+
 import com.example.demo.model.entity.Course;
-import com.example.demo.model.entity.Student;
 import com.example.demo.service.course.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,5 +61,16 @@ public class CourseController {
         courseService.remove(id);
         return new ResponseEntity<>(course.get(),HttpStatus.OK);
     }
+
+    @GetMapping("/show/{id}")
+    public ResponseEntity<List<Course>> showCourse(@PathVariable Long id){
+        List<Course> courses = courseService.showCourseByStudentId(id);
+        if (courses.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        courseService.remove(id);
+        return new ResponseEntity<>(courses,HttpStatus.OK);
+    }
+
 
 }

@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
-//                .and()
-//                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
-//                .authorizeRequests().antMatchers("/student/**").hasRole("STUDENT").and()
-//                .authorizeRequests().antMatchers("/teacher/**").hasRole("TEACHER")
+                .and()
+                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
+                .authorizeRequests().antMatchers("/student/**").hasRole("STUDENT").and()
+                .authorizeRequests().antMatchers("/teacher/**").hasRole("TEACHER")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.csrf().disable();
@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             configuration.addAllowedMethod(HttpMethod.HEAD);
             return configuration;
         });
+
 //        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
     }
