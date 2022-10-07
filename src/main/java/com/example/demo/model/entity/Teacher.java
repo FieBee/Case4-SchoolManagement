@@ -35,7 +35,6 @@ public class Teacher {
     private String active;
 
     @OneToOne
-    @NotEmpty
     private Account account;
     private String image;
 

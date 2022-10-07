@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.entity.Teacher;
+import com.example.demo.service.account.AccountService;
 import com.example.demo.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/teacher")
 public class TeacherController {
 
@@ -21,6 +23,9 @@ public class TeacherController {
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    AccountService accountService;
 
     @GetMapping
     public ResponseEntity<Iterable<Teacher>> findAllTeacher(){
@@ -65,7 +70,7 @@ public class TeacherController {
     @GetMapping("/list")
     public ModelAndView getAllTeacher() {
         ModelAndView modelAndView = new ModelAndView("/ajaxTeacher");
-        modelAndView.addObject("customers", teacherService.findAll());
+        modelAndView.addObject("teachers", teacherService.findAll());
         return modelAndView;
     }
 }
