@@ -6,5 +6,4 @@ import com.example.demo.service.GeneralService;
 import java.util.List;
 
 public interface ICourseService extends GeneralService<Course> {
-    public List<Course> showCourseByStudentId(Long id);
 }

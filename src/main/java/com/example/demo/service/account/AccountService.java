@@ -1,7 +1,6 @@
 package com.example.demo.service.account;
 
 import com.example.demo.model.entity.Account;
-import com.example.demo.model.entity.Category;
 import com.example.demo.repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -46,5 +45,15 @@ public class AccountService implements IAccountService, UserDetailsService {
     public Account findByAccount(String account){
         Account account1 = accountRepo.findByAccount(account);
         return account1;
+    }
+
+    @Override
+    public Optional<Account> findAccountById(Long id) {
+        return accountRepo.findById(id);
+    }
+
+    @Override
+    public Account findAccountByAccount(String account) {
+        return accountRepo.findAccountByAccount(account);
     }
 }

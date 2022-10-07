@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 
 
+import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Student;
+import com.example.demo.service.account.IAccountService;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class StudentController {
     @Autowired
     IStudentService studentService;
 
+
+    @Autowired
+    IAccountService accountService;
 //    @GetMapping
 //    public ModelAndView getStudent(){
 //        return new ModelAndView("student");
@@ -111,4 +116,14 @@ public class StudentController {
     });
     return errors;
     }
+
+    @GetMapping("/getStudent/{account}")
+    public ResponseEntity<Student> findByAccount(@PathVariable String account) {
+        Optional<Student> student = studentService.findStudentByAccount_Account(account);
+        if (!student.isPresent()){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student.get(),HttpStatus.OK);
+    }
+
 }

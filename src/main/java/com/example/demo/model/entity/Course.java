@@ -1,5 +1,6 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +24,10 @@ public class Course {
     private String term;
     private Double price;
 
-    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Category.class)
+//    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
-
-    @ManyToOne(targetEntity = Class.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "student_id")
-    private Student student;
-
 
 }
