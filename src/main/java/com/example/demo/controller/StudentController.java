@@ -35,14 +35,14 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<Iterable<Student>> findAllStudent(@RequestParam Optional<String> search, Pageable pageable) {
-        Page<Student> customers = studentService.findAll(pageable);
-        if (customers.isEmpty()) {
+        Page<Student> student = studentService.findAll(pageable);
+        if (student.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         if (search.isPresent()) {
             return new ResponseEntity<>(studentService.findAllByFirstNameContaining(search.get(), pageable), HttpStatus.OK);
         }
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
 //    @GetMapping
