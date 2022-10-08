@@ -46,7 +46,8 @@ public class Student {
 
     private Account account;
 
-    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Course.class)
+//    @OneToMany(targetEntity = Course.class,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> courses;
 

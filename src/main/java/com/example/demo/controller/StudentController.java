@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 
 
+import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Student;
+import com.example.demo.service.account.IAccountService;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class StudentController {
     @Autowired
     IStudentService studentService;
 
+
+    @Autowired
+    IAccountService accountService;
 //    @GetMapping
 //    public ModelAndView getStudent(){
 //        return new ModelAndView("student");
@@ -100,6 +105,7 @@ public class StudentController {
     }
 //    sử dụng @ExceptionHandler annotation để bắt MethodArgumentNotValidException ném ra từ Spring Boot khi có
 //    lỗi validate để xử lý và trả về kết quả lỗi cho client.
+
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    public Map<String, String> handleValidationExceptions(
@@ -112,4 +118,28 @@ public class StudentController {
 //    });
 //    return errors;
 //    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+        MethodArgumentNotValidException ex) {
+    Map<String, String> errors = new HashMap<>();
+    ex.getBindingResult().getAllErrors().forEach((error) -> {
+        String fieldName = ((FieldError) error).getField();
+        String errorMessage = error.getDefaultMessage();
+        errors.put(fieldName, errorMessage);
+    });
+    return errors;
+    }
+
+    @GetMapping("/getStudent/{account}")
+    public ResponseEntity<Student> findByAccount(@PathVariable String account) {
+        Optional<Student> student = studentService.findStudentByAccount_Account(account);
+        if (!student.isPresent()){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student.get(),HttpStatus.OK);
+    }
+
+
 }

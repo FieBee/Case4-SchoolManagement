@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.entity.Course;
+import com.example.demo.service.course.CourseService;
 import com.example.demo.service.course.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class CourseController {
 
     @Autowired
-    ICourseService courseService;
+    CourseService courseService;
 
     @GetMapping
     public ResponseEntity<Iterable<Course>> findAllCourse(){
@@ -64,7 +65,7 @@ public class CourseController {
 
     @GetMapping("/show/{id}")
     public ResponseEntity<List<Course>> showCourse(@PathVariable Long id){
-        List<Course> courses = courseService.showCourseByStudentId(id);
+        List<Course> courses = courseService.getCourse(id);
         if (courses.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -39,8 +39,8 @@ public class CourseService implements ICourseService {
         courseRepo.deleteById(id);
     }
 
-    @Override
-    public List<Course> showCourseByStudentId(Long id){
-        return studentRepo.findById(id).get().getCourses();
+    public List<Course> getCourse(Long id){
+       return studentRepo.findById(id).get().getCourses();
     }
+
 }

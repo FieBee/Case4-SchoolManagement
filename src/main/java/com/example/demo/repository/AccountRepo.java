@@ -11,5 +11,6 @@ public interface AccountRepo extends PagingAndSortingRepository<Account, Long> {
 
     Account findByAccount(String account);
 
-    Account findAccountByAppRole(Long id);
+    Account findAccountByAccount(String account);
+
 }

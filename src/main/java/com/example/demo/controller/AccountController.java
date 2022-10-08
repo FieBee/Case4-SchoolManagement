@@ -64,4 +64,14 @@ public class AccountController {
         modelAndView.addObject("accounts", accountService.findAll());
         return modelAndView;
     }
+
+//    @GetMapping("/alo123/{account}")
+//    public ResponseEntity<Account> getAccount(@PathVariable String account){
+//        Account aloooo = accountService.findAccountByAccount(account)
+//        Optional<Account> accounts = Optional.ofNullable(accountService.findAccountByAccount(account));
+//        if (!accounts.isPresent()){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(accounts.get(),HttpStatus.OK);
+//    }
 }
