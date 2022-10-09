@@ -19,4 +19,5 @@ public interface StudentRepo extends PagingAndSortingRepository<Student, Long> {
     Page<Student> findAllByFirstNameContaining(String firstName, Pageable pageable);
 
     Optional<Student> findStudentByAccount_Account(String userName);
+
 }
