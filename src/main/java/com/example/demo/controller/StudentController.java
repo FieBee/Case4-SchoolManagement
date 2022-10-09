@@ -3,8 +3,10 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.entity.Account;
+import com.example.demo.model.entity.Course;
 import com.example.demo.model.entity.Student;
 import com.example.demo.service.account.IAccountService;
+import com.example.demo.service.course.ICourseService;
 import com.example.demo.service.student.IStudentService;
 import com.example.demo.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class StudentController {
 
     @Autowired
     IAccountService accountService;
+
+    @Autowired
+    ICourseService courseService;
 //    @GetMapping
 //    public ModelAndView getStudent(){
 //        return new ModelAndView("student");
@@ -141,5 +146,20 @@ public class StudentController {
         return new ResponseEntity<>(student.get(),HttpStatus.OK);
     }
 
+    @PostMapping("/addCourse/{id}/{courseId}")
+    public ResponseEntity<Student> addCourse(@PathVariable Long id,@PathVariable Long courseId){
 
+        Optional<Course> course = courseService.findById(courseId);
+
+        Optional<Student> students = studentService.findById(id);
+        Student student = students.get();
+        List<Course> courses = students.get().getCourses();
+        courses.add(course.get());
+        students.get().setCourses(courses);
+
+        if (!students.isPresent()){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(studentService.save(student),HttpStatus.OK);
+    }
 }
