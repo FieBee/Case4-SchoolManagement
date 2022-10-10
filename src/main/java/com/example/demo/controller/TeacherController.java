@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.entity.Student;
 import com.example.demo.model.entity.Teacher;
 import com.example.demo.service.account.AccountService;
 import com.example.demo.service.teacher.TeacherService;
@@ -72,5 +73,14 @@ public class TeacherController {
         ModelAndView modelAndView = new ModelAndView("/ajaxTeacher");
         modelAndView.addObject("teachers", teacherService.findAll());
         return modelAndView;
+    }
+
+    @GetMapping("/getTeacher/{account}")
+    public ResponseEntity<Teacher> findByAccount(@PathVariable String account) {
+        Optional<Teacher> teacher = teacherService.findStudentByAccount_Account(account);
+        if (!teacher.isPresent()){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(teacher.get(),HttpStatus.OK);
     }
 }

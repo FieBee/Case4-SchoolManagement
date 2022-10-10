@@ -25,9 +25,9 @@ public class Course {
     private Double price;
 
     @ManyToOne(targetEntity = Category.class)
-//    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     @JsonIgnore
     private Category category;
+
 
 }

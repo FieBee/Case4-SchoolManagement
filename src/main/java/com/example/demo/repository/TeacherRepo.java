@@ -13,4 +13,5 @@ public interface TeacherRepo  extends PagingAndSortingRepository<Teacher, Long> 
     Optional<Teacher> findByLastName(String name);
 
     Teacher findByAccount(String account);
+    Optional<Teacher> findTeacherByAccount_Account(String userName);
 }

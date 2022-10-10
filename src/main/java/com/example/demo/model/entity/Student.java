@@ -57,6 +57,7 @@ public class Student {
 
     @OneToMany(targetEntity = Payment.class)
     private List<Payment> payment;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> appRole;
 

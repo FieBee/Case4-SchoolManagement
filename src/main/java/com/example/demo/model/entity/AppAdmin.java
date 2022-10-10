@@ -1,32 +1,32 @@
 package com.example.demo.model.entity;
 
+
+
+import com.example.demo.model.dto.AppRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "payment")
-public class Payment {
+public class AppAdmin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate paymentDate;
-    private Double amount;
-    private String status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "class_id")
-    private Class classes;
+    private String name;
 
+    @OneToOne
+    private Account account;
 
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<AppRole> appRole;
 }

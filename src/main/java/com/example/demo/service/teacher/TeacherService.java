@@ -34,4 +34,9 @@ public class TeacherService implements ITeacherService {
     public void remove(Long id) {
         teacherRepo.deleteById(id);
     }
+
+    @Override
+    public Optional<Teacher> findStudentByAccount_Account(String userName) {
+        return teacherRepo.findTeacherByAccount_Account(userName);
+    }
 }

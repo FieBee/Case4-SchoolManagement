@@ -22,12 +22,13 @@ public class Account {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
     @NotEmpty
-    String account;
+    private String account;
 
     @NotEmpty
     @Min(value = 5, message = "mật khẩu phải bao gồm 5 kí tự trở lên")
-    String password;
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> appRole;
