@@ -1,9 +1,10 @@
 package com.example.demo.service.teacher;
 
-import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Teacher;
 import com.example.demo.repository.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,5 +34,15 @@ public class TeacherService implements ITeacherService {
     @Override
     public void remove(Long id) {
         teacherRepo.deleteById(id);
+    }
+
+    @Override
+    public Page<Teacher> findAll(Pageable pageable) {
+        return teacherRepo.findAll(pageable);
+    }
+
+    @Override
+    public Page<Teacher> findAllByFirstNameContaining(String firstName, Pageable pageable) {
+        return teacherRepo.findAllByFirstNameContaining(firstName,pageable);
     }
 }
