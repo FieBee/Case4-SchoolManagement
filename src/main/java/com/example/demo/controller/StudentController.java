@@ -90,7 +90,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody  Student student){
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody Student student){
         Optional<Student> students = studentService.findById(id);
         if (!students.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
