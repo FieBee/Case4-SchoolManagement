@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ITeacherService  extends GeneralService<Teacher> {
     Optional<Teacher> findStudentByAccount_Account(String userName);
+    Teacher findByMail(String email);
 }

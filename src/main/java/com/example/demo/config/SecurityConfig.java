@@ -38,11 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/login").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
-                .authorizeRequests().antMatchers("/student/**").hasRole("STUDENT").and()
-                .authorizeRequests().antMatchers("/teacher/**").hasRole("TEACHER")
+                .authorizeRequests().antMatchers("/student").hasRole("STUDENT").and()
+                .authorizeRequests().antMatchers("/class/**").hasRole("TEACHER")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.csrf().disable();

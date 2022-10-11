@@ -39,4 +39,9 @@ public class TeacherService implements ITeacherService {
     public Optional<Teacher> findStudentByAccount_Account(String userName) {
         return teacherRepo.findTeacherByAccount_Account(userName);
     }
+
+    @Override
+    public Teacher findByMail(String email){
+        return teacherRepo.findByEmail(email);
+    }
 }
